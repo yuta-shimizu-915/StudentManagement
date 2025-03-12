@@ -1,8 +1,11 @@
-package raisetech.StudentManagement;
+package raisetech.StudentManagement.repository;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import raisetech.StudentManagement.data.Student;
+import raisetech.StudentManagement.data.StudentCourses;
+
 
 @Mapper
 public interface StudentRepository {
@@ -11,5 +14,5 @@ public interface StudentRepository {
   List<Student> search();
 
   @Select("SELECT * FROM students_courses")
-  List<Studentcourses> search_co();
+  List<StudentCourses> search_course();
 }
