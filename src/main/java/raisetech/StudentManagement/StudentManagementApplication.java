@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import raisetech.StudentManagement.data.Student;
+import raisetech.StudentManagement.data.StudentCourses;
+import raisetech.StudentManagement.repository.StudentRepository;
 
 @SpringBootApplication
 @RestController
