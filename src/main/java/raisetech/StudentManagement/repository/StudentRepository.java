@@ -14,6 +14,7 @@ import raisetech.StudentManagement.data.StudentCourses;
 public interface StudentRepository {
 
   @Select("SELECT * FROM students")
+  List<Student> searchStudent();
   List<Student> search();
   @Select("SELECT * FROM student WHERE name = #{name}")
   Student searchByName(String name);
@@ -22,5 +23,5 @@ public interface StudentRepository {
   void registerStudent(String name,int age);
 
   @Select("SELECT * FROM students_courses")
-  List<StudentCourses> search_course();
+  List<StudentCourses> searchCourse();
 }
