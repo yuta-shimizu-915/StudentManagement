@@ -3,6 +3,7 @@ package raisetech.StudentManagement.repository;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import java.util.List;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -24,4 +25,9 @@ public interface StudentRepository {
 
   @Select("SELECT * FROM students_courses")
   List<StudentCourses> searchCourse();
+
+  @Insert(
+      "INSERT INTO students (student_id,name,furigana,nickname,e_mail,region,age,gender,remark,isDeletes) "
+          + "VALUES(#{studentId},#{name},#{furigana},#{nickName},#{email},#{region},#{age},#{gender},#{remark},false)")
+  void registerStudent(Student student);
 }
