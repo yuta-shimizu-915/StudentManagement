@@ -1,6 +1,7 @@
 package raisetech.StudentManagement.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import raisetech.StudentManagement.controller.converter.StudentConverter;
 import raisetech.StudentManagement.data.Student;
@@ -46,7 +48,7 @@ public class StudentController {
       List<StudentCourses> convertStudentCourses = studentsCourses.stream()
           .filter(studentCourse -> student.getStudentId().equals(studentCourse.getStudentId()))
           .collect(Collectors.toList());
-      studentDetail.setStudentCourses(convertStudentCourses);
+      studentDetail.setStudentsCourses(convertStudentCourses);
       studentDetails.add(studentDetail);
     });
     return studentDetails;
@@ -59,7 +61,9 @@ public class StudentController {
 
   @GetMapping("/newStudent")
   public String newStudent(Model model) {
-    model.addAttribute("studentDetail", new StudentDetail());
+    StudentDetail studentDetail = new StudentDetail();
+    studentDetail.setStudentsCourses(Arrays.asList(new StudentCourses()));
+    model.addAttribute("studentDetail", studentDetail);
     return "registerStudent";
   }
 
@@ -71,4 +75,20 @@ public class StudentController {
     service.registerStudent(studentDetail);
     return "redirect:/studentList";
   }
+
+  @GetMapping("/editStudent/{id}")
+  public String editStudent(@PathVariable String id, Model model) {
+    StudentDetail studentDetail = service.getStudentDetailById(id);
+    model.addAttribute("studentDetail", studentDetail);
+    return "updateStudent";
+  }
+
+
+  @PostMapping("/updateStudent")
+  public String updateStudent(@ModelAttribute StudentDetail studentDetail) {
+    service.updateStudentDetail(studentDetail);
+    return "redirect:/studentList";
+  }
+
+
 }
