@@ -18,6 +18,10 @@
     <input type="text" th:field="*{student.furigana}"/>
   </div>
   <div>
+    <label>studentId</label>
+    <input type="text" th:field="*{student.studentId}">
+  </div>
+  <div>
     <label>ニックネーム</label>
     <input type="text" th:field="*{student.nickName}"/>
   </div>
@@ -42,11 +46,17 @@
     <input type="text" th:field="*{student.remark}"/>
   </div>
   <div th:each="course, stat : *{studentsCourses}">
-    <h4>コース [[${stat.index} + 1]]</h4>
-    <input type="hidden" th:field="*{studentsCourses[__${stat.index}__].id}"/>
     <div>
-      <label>コース名</label>
-      <input type="text" th:field="*{studentsCourses[__${stat.index}__].courseName}"/>
+      <label for="id"
+             th:for="studentsCourse.__${stat.index}__.id">コースID</label>
+      <input type="hidden" id="id" th:id="studentsCourse.__${stat.index}__.id"
+             th:field="*{studentsCourses[__${stat.index}__].id}"/>
+    </div>
+    <div>
+      <label for="courseName"
+             th:for="studentsCourse.__${stat.index}__.courseName">コース名</label>
+      <input type="text" id="courseName" th:id="studentsCourse.__${stat.index}__.courseName"
+             th:field="*{studentsCourses[__${stat.index}__].courseName}"/>
     </div>
     <div>
       <label>開始日</label>
@@ -63,5 +73,6 @@
 
 </form>
 <a th:href="@{/studentList}">戻る</a>
+<a th:href="@{/cancelUpdate}">キャンセル</a>
 </body>
 </html>

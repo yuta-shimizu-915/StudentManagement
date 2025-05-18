@@ -39,6 +39,13 @@ public class StudentController {
     return "studentList";
   }
 
+  @GetMapping("/Student/{id}")
+  public String getStudent(@PathVariable String id, Model model) {
+    StudentDetail studentDetail = service.searchStudent(id);
+    model.addAttribute("studentDetail", studentDetail);
+    return "registerStudent";
+  }
+
   private List<StudentDetail> convertStudentDetails(List<Student> students,
       List<StudentCourses> studentsCourses) {
     List<StudentDetail> studentDetails = new ArrayList<>();
@@ -84,11 +91,25 @@ public class StudentController {
   }
 
 
-  @PostMapping("/updateStudent")
+  /*@PostMapping("/updateStudent")
   public String updateStudent(@ModelAttribute StudentDetail studentDetail) {
     service.updateStudentDetail(studentDetail);
     return "redirect:/studentList";
+  }*/
+
+
+  @PostMapping("/updateStudent")
+  public String updateStudent(@ModelAttribute StudentDetail studentDetail, BindingResult result) {
+    if (result.hasErrors()) {
+      return "updateStudent";
+    }
+    service.updateStudent(studentDetail);
+    return "redirect:/studentList";
   }
 
+  @GetMapping("/cancelUpdate")
+  public String cancelUpdate() {
+    return "redirect:/studentList";
+  }
 
 }

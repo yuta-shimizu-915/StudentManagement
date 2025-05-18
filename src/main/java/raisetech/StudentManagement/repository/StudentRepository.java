@@ -15,10 +15,16 @@ import raisetech.StudentManagement.data.StudentCourses;
 public interface StudentRepository {
 
   @Select("SELECT * FROM students")
-  List<Student> searchStudent();
+  List<Student> search();
+
+  @Select("SELECT * FROM students WHERE student_id = #{studentId}")
+  Student searchStudent(String studentId);
 
   @Select("SELECT * FROM students_courses")
-  List<StudentCourses> searchCourse();
+  List<StudentCourses> searchStudentsCoursesList();
+
+  @Select("SELECT * FROM students_courses WHERE student_id = #{studentId}")
+  List<StudentCourses> searchStudentsCourses(String studentId);
 
   @Insert(
       "INSERT INTO students (name,furigana,nickname,e_mail,region,age,gender,remark,isDeletes) "
@@ -38,11 +44,20 @@ public interface StudentRepository {
   void updateStudentCourse(StudentCourses studentCourses);
 
   @Select("SELECT student_id, name, furigana, nickname, e_mail, region, age, gender, remark  "
-      + "FROM students WHERE student_id = #{id}")
-  Student findStudentById(@Param("id") String id);
+      + "FROM students WHERE student_id = #{studentId}")
+  Student findStudentById(@Param("studentId") String studentId);
 
   @Select("SELECT student_id, course_name, start_date, finish_date " +
-      "FROM students_courses WHERE student_id = #{id}")
-  List<StudentCourses> findStudentCoursesById(@Param("id") String id);
+      "FROM students_courses WHERE student_id = #{studentId}")
+  List<StudentCourses> findStudentCoursesById(@Param("studentId") String studentId);
+
+  /*@Update(
+      "UPDATE students SET(name = #{name},furigane=#{furigana},nickname = #{nickName},email = #{email},region = #{region},#age = {age},gender = #{gender},remark = #{remark},is_delete = #{isDeleted})WHERE studentId = {studentId}")
+  void updateStudent(Student student);*/
+
+  @Update(
+      "UPDATE students_courses SET course_name = #{courseName} WHERE id =#{id}")
+  void updateStudentsCourses(StudentCourses studentCourses);
+
 
 }
