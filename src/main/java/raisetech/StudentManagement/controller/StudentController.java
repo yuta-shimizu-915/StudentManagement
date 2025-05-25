@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import raisetech.StudentManagement.controller.converter.StudentConverter;
 import raisetech.StudentManagement.data.Student;
 import raisetech.StudentManagement.data.StudentCourses;
@@ -98,11 +99,33 @@ public class StudentController {
   }*/
 
 
-  @PostMapping("/updateStudent")
+  /*@PostMapping("/updateStudent")
   public String updateStudent(@ModelAttribute StudentDetail studentDetail, BindingResult result) {
     if (result.hasErrors()) {
       return "updateStudent";
     }
+    service.updateStudent(studentDetail);
+    return "redirect:/studentList";
+  }*/
+
+  @PostMapping("/updateStudent")
+  public String updateStudent(@ModelAttribute StudentDetail studentDetail, BindingResult result,
+      @RequestParam("student.age") String ageStr) {
+    if (result.hasErrors()) {
+      return "updateStudent";
+    }
+
+//    String replaced = ageStr.replace(',', '.');
+//    int ageInt = 0;
+//    try {
+//      double d = Double.parseDouble(replaced);
+//      ageInt = (int) d;
+//    } catch (NumberFormatException e) {
+//
+//    }
+//
+//    studentDetail.getStudent().setAge(ageInt);
+
     service.updateStudent(studentDetail);
     return "redirect:/studentList";
   }
