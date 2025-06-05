@@ -50,10 +50,7 @@ public interface StudentRepository {
   @Select("SELECT student_id, course_name, start_date, finish_date " +
       "FROM students_courses WHERE student_id = #{studentId}")
   List<StudentCourses> findStudentCoursesById(@Param("studentId") String studentId);
-
-  /*@Update(
-      "UPDATE students SET(name = #{name},furigane=#{furigana},nickname = #{nickName},email = #{email},region = #{region},#age = {age},gender = #{gender},remark = #{remark},is_delete = #{isDeleted})WHERE studentId = {studentId}")
-  void updateStudent(Student student);*/
+  
 
   @Update(
       "UPDATE students_courses SET course_name = #{courseName} WHERE id =#{id}")
