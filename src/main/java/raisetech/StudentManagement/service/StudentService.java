@@ -10,6 +10,7 @@ import raisetech.StudentManagement.data.StudentCourses;
 import raisetech.StudentManagement.domain.StudentDetail;
 import raisetech.StudentManagement.repository.StudentRepository;
 
+
 @Service
 public class StudentService {
 
@@ -20,9 +21,11 @@ public class StudentService {
     this.repository = repository;
   }
 
+
   public List<Student> searchStudentList() {
     return repository.search();
   }
+
 
   public StudentDetail searchStudent(String studentId) {
     Student student = repository.searchStudent(studentId);
@@ -38,7 +41,7 @@ public class StudentService {
   }
 
   @Transactional
-  public void registerStudent(StudentDetail studentDetail) {
+  public StudentDetail registerStudent(StudentDetail studentDetail) {
     repository.registerStudent(studentDetail.getStudent());
     for (StudentCourses studentsCourse : studentDetail.getStudentsCourses()) {
       studentsCourse.setStudentId(studentDetail.getStudent().getStudentId());
@@ -46,6 +49,7 @@ public class StudentService {
       studentsCourse.setFinishDate(LocalDate.now().plusYears(1));
       repository.registerStudentsCourses(studentsCourse);
     }
+    return studentDetail;
   }
 
   public void updateStudentDetail(StudentDetail studentDetail) {

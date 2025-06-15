@@ -1,7 +1,6 @@
 package raisetech.StudentManagement.controller;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +20,13 @@ import raisetech.StudentManagement.data.StudentCourses;
 import raisetech.StudentManagement.domain.StudentDetail;
 import raisetech.StudentManagement.service.StudentService;
 
+
 @RestController
 public class StudentController {
 
   private StudentService service;
   private StudentConverter converter;
+
 
   @Autowired
   public StudentController(StudentService service, StudentConverter converter) {
@@ -33,14 +34,19 @@ public class StudentController {
     this.converter = converter;
   }
 
+
   @GetMapping("/studentList")
   public List<StudentDetail> getStudentList() {
     List<Student> students = service.searchStudentList();
     List<StudentCourses> studentsCourses = service.searchStudentCoursesList();
-
     return converter.convertStudentDetails(students, studentsCourses);
   }
 
+
+  @GetMapping("/student/{id}")
+  public StudentDetail getStudent(@PathVariable String id) {
+    return service.searchStudent(id);
+  }
 
   private List<StudentDetail> convertStudentDetails(List<Student> students,
       List<StudentCourses> studentsCourses) {
@@ -62,21 +68,10 @@ public class StudentController {
     return service.searchStudentCoursesList();
   }
 
-  @GetMapping("/newStudent")
-  public String newStudent(Model model) {
-    StudentDetail studentDetail = new StudentDetail();
-    studentDetail.setStudentsCourses(Arrays.asList(new StudentCourses()));
-    model.addAttribute("studentDetail", studentDetail);
-    return "registerStudent";
-  }
-
   @PostMapping("/registerStudent")
-  public String registerStudent(@ModelAttribute StudentDetail studentDetail, BindingResult result) {
-    if (result.hasErrors()) {
-      return "registerStudent";
-    }
-    service.registerStudent(studentDetail);
-    return "redirect:/studentList";
+  public ResponseEntity<StudentDetail> registerStudent(@RequestBody StudentDetail studentDetail) {
+    StudentDetail responseStudentDetail = service.registerStudent(studentDetail);
+    return ResponseEntity.ok(responseStudentDetail);
   }
 
   @GetMapping("/editStudent/{id}")

@@ -10,19 +10,44 @@ import org.apache.ibatis.annotations.Update;
 import raisetech.StudentManagement.data.Student;
 import raisetech.StudentManagement.data.StudentCourses;
 
+/**
+ * 受講生テーブルと受講生コース情報テーブルと紐づけるRepository
+ */
 
 @Mapper
 public interface StudentRepository {
 
+  /**
+   * 受講生の全件検索
+   *
+   * @return　受講生一覧(全体)
+   */
   @Select("SELECT * FROM students")
   List<Student> search();
 
+  /**
+   * 受講生の検索
+   *
+   * @param studentId 　受講生ID
+   * @return 受講生
+   */
   @Select("SELECT * FROM students WHERE student_id = #{studentId}")
   Student searchStudent(String studentId);
 
+  /**
+   * 受講生のコース情報の全件検索
+   *
+   * @return　受講生のコース情報(全件)
+   */
   @Select("SELECT * FROM students_courses")
   List<StudentCourses> searchStudentsCoursesList();
 
+  /**
+   * 受講生IDに紐づく受講生のコース情報の検索
+   *
+   * @param studentId 　受講生ID
+   * @return 受講生IDに紐づくコース情報
+   */
   @Select("SELECT * FROM students_courses WHERE student_id = #{studentId}")
   List<StudentCourses> searchStudentsCourses(String studentId);
 
@@ -50,7 +75,7 @@ public interface StudentRepository {
   @Select("SELECT student_id, course_name, start_date, finish_date " +
       "FROM students_courses WHERE student_id = #{studentId}")
   List<StudentCourses> findStudentCoursesById(@Param("studentId") String studentId);
-  
+
 
   @Update(
       "UPDATE students_courses SET course_name = #{courseName} WHERE id =#{id}")
