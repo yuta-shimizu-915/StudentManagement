@@ -70,8 +70,11 @@ public class StudentService {
   @Transactional
   public void updateStudent(StudentDetail studentDetail) {
     repository.updateStudent(studentDetail.getStudent());
-    for (StudentCourses studentsCourse : studentDetail.getStudentsCourses()) {
-      repository.updateStudentsCourses(studentsCourse);
+    List<StudentCourses> courses = studentDetail.getStudentsCourses();
+    if (courses != null) {
+      for (StudentCourses studentsCourse : courses) {
+        repository.updateStudentsCourses(studentsCourse);
+      }
     }
   }
 }
