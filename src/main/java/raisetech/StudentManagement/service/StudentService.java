@@ -16,16 +16,19 @@ import raisetech.StudentManagement.repository.StudentRepository;
 public class StudentService {
 
   private StudentRepository repository;
+  private StudentConverter converter;
 
   @Autowired
   public StudentService(StudentRepository repository, StudentConverter converter) {
     this.repository = repository;
-
+    this.converter = converter;
   }
 
 
-  public List<Student> searchStudentList() {
-    return repository.search();
+  public List<StudentDetail> searchStudentList() {
+    List<Student> studentList = repository.search();
+    List<StudentsCourse> studentCourseList = repository.searchStudentCourseList();
+    return converter.convertStudentDetails(studentList, studentCourseList);
   }
 
 

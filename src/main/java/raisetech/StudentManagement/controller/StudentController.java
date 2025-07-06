@@ -39,7 +39,7 @@ public class StudentController {
 
   @Operation(summary = "ichirannkensaku", description = "ichirann no kennsaku")
   @GetMapping("/studentList")
-  public List<Student> getStudentList() {
+  public List<StudentDetail> getStudentList() {
     return service.searchStudentList();
   }
 

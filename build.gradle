@@ -25,29 +25,28 @@ repositories {
 }
 
 dependencies {
-    //Spring Boot
+    // Spring Boot
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    //thymeleaf
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-    //Validation
     implementation 'org.springframework.boot:spring-boot-starter-validation'
-    //OpenAPI Generator
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
+    implementation 'org.apache.commons:commons-lang3:3.14.0'
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
 
-    //便利機能、ユーティリティ
-    implementation 'org.apache.commons:commons-lang3:3.14.0'
-
-    //providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-
-    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
-    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
-    //Mysqlドライバ
+    // MySQL
     runtimeOnly 'com.mysql:mysql-connector-j'
-//lombok
+
+    // Tomcat
+    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+
+    // Lombok
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+
+    // テスト関連
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.mockito:mockito-junit-jupiter:5.10.0'  // ← これを追加！
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 tasks.named('test') {
