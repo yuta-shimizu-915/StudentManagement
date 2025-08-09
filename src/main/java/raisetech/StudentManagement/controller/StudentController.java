@@ -18,6 +18,7 @@ import raisetech.StudentManagement.controller.converter.StudentConverter;
 import raisetech.StudentManagement.data.Student;
 import raisetech.StudentManagement.data.StudentsCourse;
 import raisetech.StudentManagement.domain.StudentDetail;
+import raisetech.StudentManagement.exception.TestException;
 import raisetech.StudentManagement.service.StudentService;
 
 @Validated
@@ -36,10 +37,8 @@ public class StudentController {
 
 
   @GetMapping("/studentList")
-  public List<StudentDetail> getStudentList() {
-    List<Student> students = service.searchStudentList();
-    List<StudentsCourse> studentsCourses = service.searchStudentCoursesList();
-    return converter.convertStudentDetails(students, studentsCourses);
+  public List<StudentDetail> getStudentList() throws TestException {
+    throw new TestException("This API is not available.");
   }
 
 
