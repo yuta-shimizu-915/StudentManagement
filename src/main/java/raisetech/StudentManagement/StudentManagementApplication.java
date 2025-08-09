@@ -13,9 +13,6 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import raisetech.StudentManagement.data.Student;
-import raisetech.StudentManagement.data.StudentCourses;
-import raisetech.StudentManagement.repository.StudentRepository;
 
 @SpringBootApplication
 @RestController
@@ -38,4 +35,7 @@ public class StudentManagementApplication {
 	public List<Studentcourses> getStudentCoursesList(){
 		return repository.search_co();
 	}
+  public static void main(String[] args) {
+    SpringApplication.run(StudentManagementApplication.class, args);
+  }
 }

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="raisetech.StudentManagement.repository.StudentRepository">
+
+  <!-- 受講生の全件検索 -->
+  <select id="search" resultType="raisetech.StudentManagement.data.Student">
+    SELECT * FROM students
+  </select>
+
+  <!-- 受講生の全件検索 -->
+  <select id="searchStudent" resultType="raisetech.StudentManagement.data.Student">
+    SELECT * FROM students WHERE student_id = #{studentId}
+  </select>
+
+  <select id="searchStudentCourseList" resultType="raisetech.StudentManagement.data.StudentsCourse">
+    SELECT * FROM students_courses
+  </select>
+
+  <select id="searchStudentCourse" parameterType="string"
+    resultType="raisetech.StudentManagement.data.StudentsCourse">
+    SELECT * FROM students_courses WHERE student_id = #{studentId}
+  </select>
+
+  <insert id="registerStudent" parameterType="raisetech.StudentManagement.data.Student"
+    useGeneratedKeys="true" keyProperty="studentId">
+    INSERT INTO students (name, furigana, nickname, e_mail, region, age, gender, remark, isDeletes)
+    VALUES (#{name}, #{furigana}, #{nickName}, #{email}, #{region}, #{age}, #{gender}, #{remark},
+    false)
+  </insert>
+
+  <insert id="registerStudentCourse" parameterType="raisetech.StudentManagement.data.StudentsCourse"
+    useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO students_courses (student_id, course_name, start_date, finish_date)
+    VALUES (#{studentId}, #{courseName}, #{startDate}, #{finishDate})
+  </insert>
+
+  <update id="updateStudent" parameterType="raisetech.StudentManagement.data.Student">
+    UPDATE students
+    SET name=#{name}, furigana=#{furigana}, nickname=#{nickName}, e_mail=#{email}, region=#{region},
+    age=#{age}, gender=#{gender}, remark=#{remark}
+    WHERE student_id=#{studentId}
+  </update>
+
+  <update id="updateStudentCourse" parameterType="raisetech.StudentManagement.data.StudentsCourse">
+    UPDATE students_courses
+    SET course_name=#{courseName}, start_date=#{startDate}, finish_date=#{finishDate}
+    WHERE id=#{id}
+  </update>
+
+  <select id="findStudentById" parameterType="string"
+    resultType="raisetech.StudentManagement.data.Student">
+    SELECT student_id, name, furigana, nickname, e_mail, region, age, gender, remark
+    FROM students WHERE student_id = #{studentId}
+  </select>
+
+  <select id="findStudentCoursesById" parameterType="string"
+    resultType="raisetech.StudentManagement.data.StudentsCourse">
+    SELECT student_id, course_name, start_date, finish_date
+    FROM students_courses WHERE student_id = #{studentId}
+  </select>
+
+  <update id="updateStudentsCourses"
+    parameterType="raisetech.StudentManagement.data.StudentsCourse">
+    UPDATE students_courses SET course_name = #{courseName} WHERE id = #{id}
+  </update>
+
+</mapper>
