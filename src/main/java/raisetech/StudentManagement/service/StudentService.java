@@ -58,7 +58,7 @@ public class StudentService {
     return studentDetail;
   }
 
-  private static void initStudentsCourse(StudentsCourse studentsCourse, Student student) {
+  void initStudentsCourse(StudentsCourse studentsCourse, Student student) {
     LocalDate now = LocalDate.now();
 
     studentsCourse.setStudentId(student.getStudentId());
