@@ -1,5 +1,7 @@
 package raisetech.StudentManagement;
 
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Info;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Map;
@@ -14,8 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+@OpenAPIDefinition(info = @Info(title = "zyukousei kanri System"))
 @SpringBootApplication
-@RestController
 public class StudentManagementApplication {
 
 	@Autowired
