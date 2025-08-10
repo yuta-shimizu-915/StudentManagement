@@ -1,10 +1,12 @@
 package raisetech.StudentManagement.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -16,6 +18,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import raisetech.StudentManagement.controller.converter.StudentConverter;
 import raisetech.StudentManagement.data.Student;
@@ -41,7 +44,8 @@ class StudentControllerTest {
   @Test
   void ichiranKensaku_returnList() throws Exception {
     mockMvc.perform(get("/studentList"))
-        .andExpect(status().isOk());
+        .andExpect(status().isOk())
+        .andExpect(content().json("[]"));
 
     verify(service, times(1)).searchStudentList();
   }
@@ -104,4 +108,42 @@ class StudentControllerTest {
 
     verify(service, times(1)).searchStudent("24");
   }
+
+  @Test
+  void Shosai_Kensaku() throws Exception {
+    String id = "012";
+    mockMvc.perform(get("/student/{id}", id))
+        .andExpect(status().isOk());
+
+    verify(service, times(1)).searchStudent(id);
+  }
+
+  @Test
+  void Touroku_check() throws Exception {
+    mockMvc.perform(post("/registerStudent").contentType(MediaType.APPLICATION_JSON).content("""
+            {
+              "student": {
+                "name": "Tadano Tameshi",
+                "Furigana": "Tadano Tameshi",
+                "email": "Tadano.tameshi@example.com",
+                "region": "Hokkaido",
+                "age": 35,
+                "gender": "man",
+                "remark": ""
+              },
+              "studentCourseList":[
+                {
+                    "courseName":"Java_start"
+                }
+              ]
+            
+            }
+            """
+        ))
+        .andExpect(status().isOk());
+
+    verify(service, times(1)).registerStudent(any());
+  }
+
+
 }

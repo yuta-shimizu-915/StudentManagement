@@ -15,14 +15,17 @@ import raisetech.StudentManagement.repository.StudentRepository;
 @Service
 public class StudentService {
 
+  @Autowired
   private StudentRepository repository;
-  private StudentConverter converter;
 
   @Autowired
+  private StudentConverter converter;
+
+  /*@Autowired
   public StudentService(StudentRepository repository, StudentConverter converter) {
     this.repository = repository;
     this.converter = converter;
-  }
+  }*/
 
 
   public List<StudentDetail> searchStudentList() {

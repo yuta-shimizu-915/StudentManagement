@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,6 +17,9 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.GetMapping;
+import raisetech.StudentManagement.domain.StudentDetail;
+import raisetech.StudentManagement.service.StudentService;
 
 @OpenAPIDefinition(info = @Info(title = "zyukousei kanri System"))
 @SpringBootApplication
@@ -37,7 +42,17 @@ public class StudentManagementApplication {
 	public List<Studentcourses> getStudentCoursesList(){
 		return repository.search_co();
 	}
+  @Autowired
+  private StudentService studentService;
+
   public static void main(String[] args) {
     SpringApplication.run(StudentManagementApplication.class, args);
   }
+
+  @GetMapping("/studentList")
+  public List<StudentDetail> getStudentList() {
+
+    return studentService.searchStudentList();
+  }
+
 }
