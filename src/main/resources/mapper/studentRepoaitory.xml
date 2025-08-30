@@ -14,12 +14,15 @@
   </select>
 
   <select id="searchStudentCourseList" resultType="raisetech.StudentManagement.data.StudentsCourse">
-    SELECT * FROM students_courses
+    SELECT id, student_id, course_name, start_date, finish_date
+    FROM students_courses
   </select>
 
   <select id="searchStudentCourse" parameterType="string"
     resultType="raisetech.StudentManagement.data.StudentsCourse">
-    SELECT * FROM students_courses WHERE student_id = #{studentId}
+    SELECT id, student_id, course_name, start_date, finish_date
+    FROM students_courses
+    WHERE student_id = #{studentId}
   </select>
 
   <insert id="registerStudent" parameterType="raisetech.StudentManagement.data.Student"
@@ -56,7 +59,7 @@
 
   <select id="findStudentCoursesById" parameterType="string"
     resultType="raisetech.StudentManagement.data.StudentsCourse">
-    SELECT student_id, course_name, start_date, finish_date
+    SELECT id,student_id, course_name, start_date, finish_date
     FROM students_courses WHERE student_id = #{studentId}
   </select>
 

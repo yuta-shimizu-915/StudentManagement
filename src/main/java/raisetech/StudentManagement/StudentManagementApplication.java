@@ -2,29 +2,17 @@ package raisetech.StudentManagement;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.GetMapping;
-import raisetech.StudentManagement.domain.StudentDetail;
-import raisetech.StudentManagement.service.StudentService;
 
 @OpenAPIDefinition(info = @Info(title = "zyukousei kanri System"))
 @SpringBootApplication
 public class StudentManagementApplication {
 
-  @Autowired
-  private StudentService studentService;
 
   public static void main(String[] args) {
     SpringApplication.run(StudentManagementApplication.class, args);
   }
 
-  @GetMapping("/studentList")
-  public List<StudentDetail> getStudentList() {
-
-    return studentService.searchStudentList();
-  }
 
 }
