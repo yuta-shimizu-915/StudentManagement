@@ -1,7 +1,7 @@
 plugins {
     id 'java'
     id 'war'
-    id 'org.springframework.boot' version '3.4.1'
+    id 'org.springframework.boot' version '3.2.1'
     id 'io.spring.dependency-management' version '1.1.7'
 }
 
@@ -25,17 +25,21 @@ repositories {
 }
 
 dependencies {
-    //Spring Boot
+    // Spring Boot
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    //thymeleaf
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-    //便利機能、ユーティリティ
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
     implementation 'org.apache.commons:commons-lang3:3.14.0'
+
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
+
+    // MySQL
+    runtimeOnly 'com.mysql:mysql-connector-j'
+
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	// Apache Common Lang
 	implementation 'org.apache.commons:commons-lang3:3.17.0'
-	//MySQLドライバ
-	runtimeOnly 'com.mysql:mysql-connector-j'
 
 	//MyBatis
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
@@ -44,13 +48,21 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
+
+    // Tomcat
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
-    //Mysqlドライバ
-    runtimeOnly 'com.mysql:mysql-connector-j'
-//lombok
+
+    // Lombok
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+
+    // テスト関連
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.mockito:mockito-junit-jupiter:5.10.0'  // ← これを追加！
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
+    testImplementation 'com.h2database:h2:2.2.224'
+
 }
 
 tasks.named('test') {

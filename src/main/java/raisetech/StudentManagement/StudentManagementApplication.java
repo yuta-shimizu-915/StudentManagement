@@ -1,5 +1,11 @@
 package raisetech.StudentManagement;
 
+
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Info;
+
+
+
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Map;
@@ -17,9 +23,11 @@ import raisetech.StudentManagement.data.Student;
 import raisetech.StudentManagement.data.StudentCourses;
 import raisetech.StudentManagement.repository.StudentRepository;
 
+
+@OpenAPIDefinition(info = @Info(title = "zyukousei kanri System"))
 @SpringBootApplication
-@RestController
 public class StudentManagementApplication {
+
 
 	@Autowired
 	private StudentRepository repository;
@@ -38,4 +46,5 @@ public class StudentManagementApplication {
 	public List<Studentcourses> getStudentCoursesList(){
 		return repository.search_co();
 	}
+
 }

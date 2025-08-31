@@ -17,6 +17,7 @@
     <th>年齢</th>
     <th>性別</th>
     <th>備考</th>
+    <th>キャンセル</th>
   </tr>
   </thead>
   <tbody>
@@ -24,7 +25,10 @@
     <td th:text="${studentDetail.student.studentId}">1</td>
     <td>
       <a th:href="@{'/editStudent/' + ${studentDetail.student.studentId}}">
-        <span th:text="${studentDetail.student.name}">山田太郎</span>
+        <span th:text="${studentDetail.student.name}">
+          <a href="/studentList"
+             th:href="@{/student/{id}(id=${studentDetail.student.id})}">山田太郎</a>
+        </span>
       </a>
     </td>
     <td th:text="${studentDetail.student.furigana}">やまだたろう</td>
@@ -34,6 +38,9 @@
     <td th:text="${studentDetail.student.age}">20</td>
     <td th:text="${studentDetail.student.gender}">男性</td>
     <td th:text="${studentDetail.student.remark}">特になし</td>
+    <td>
+      <input type="checkbox" th:checked="${studentDetail.student.isDeleted}"/>
+    </td>
   </tr>
   </tbody>
 
