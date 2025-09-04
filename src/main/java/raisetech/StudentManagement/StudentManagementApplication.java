@@ -2,57 +2,23 @@ package raisetech.StudentManagement;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import java.util.Map;
-import org.springframework.beans.factory.annotation.Autowired;
-import java.util.List;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.GetMapping;
-import raisetech.StudentManagement.domain.StudentDetail;
-import raisetech.StudentManagement.service.StudentService;
+import raisetech.StudentManagement.repository.StudentRepository;
 
 @OpenAPIDefinition(info = @Info(title = "zyukousei kanri System"))
 @SpringBootApplication
+@MapperScan("raisetech.StudentManagement.repository")
 public class StudentManagementApplication {
 
-	@Autowired
-	private StudentRepository repository;
-
-	public static void main(String[] args) {
-		SpringApplication.run(StudentManagementApplication.class, args);
-	}
-
-	@GetMapping("/studentList")
-	public List<Student> getStudentList() {
-
-		return repository.search();
-	}
-
-	@GetMapping("/studentscourses")
-	public List<Studentcourses> getStudentCoursesList(){
-		return repository.search_co();
-	}
   @Autowired
-  private StudentService studentService;
+  private StudentRepository repository;
 
   public static void main(String[] args) {
     SpringApplication.run(StudentManagementApplication.class, args);
   }
 
-  @GetMapping("/studentList")
-  public List<StudentDetail> getStudentList() {
-
-    return studentService.searchStudentList();
-  }
 
 }

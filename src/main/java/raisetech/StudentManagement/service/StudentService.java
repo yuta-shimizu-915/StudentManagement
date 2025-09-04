@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import raisetech.StudentManagement.controller.converter.StudentConverter;
+import raisetech.StudentManagement.data.CourseStatus;
 import raisetech.StudentManagement.data.Student;
+import raisetech.StudentManagement.data.StudentData;
 import raisetech.StudentManagement.data.StudentsCourse;
 import raisetech.StudentManagement.domain.StudentDetail;
 import raisetech.StudentManagement.repository.StudentRepository;
@@ -27,7 +29,6 @@ public class StudentService {
     this.converter = converter;
   }*/
 
-
   public List<StudentDetail> searchStudentList() {
     List<Student> studentList = repository.search();
     List<StudentsCourse> studentCourseList = repository.searchStudentCourseList();
@@ -41,7 +42,7 @@ public class StudentService {
         student.getStudentId());
     StudentDetail studentDetail = new StudentDetail();
     studentDetail.setStudent(student);
-    studentDetail.setStudentsCourseList(studentCourseList);
+    studentDetail.setStudentCourseList(studentCourseList);
     return studentDetail;
   }
 
@@ -54,11 +55,21 @@ public class StudentService {
     Student student = studentDetail.getStudent();
 
     repository.registerStudent(student);
-    studentDetail.getStudentsCourseList().forEach(studentsCourse -> {
+    studentDetail.getStudentCourseList().forEach(studentsCourse -> {
       initStudentsCourse(studentsCourse, student);
       repository.registerStudentCourse(studentsCourse);
+
+      CourseStatus status = new CourseStatus();
+      status.setStudentCourseId(studentsCourse.getId());
+      status.setStatus("Kari");
+      repository.registerCourseStatus(status);
     });
     return studentDetail;
+  }
+
+  @Transactional
+  public void updateCourseStatus(CourseStatus courseStatus) {
+    repository.updateCourseStatus(courseStatus);
   }
 
   void initStudentsCourse(StudentsCourse studentsCourse, Student student) {
@@ -73,7 +84,7 @@ public class StudentService {
   public void updateStudentDetail(StudentDetail studentDetail) {
     repository.updateStudent(studentDetail.getStudent());
 
-    for (StudentsCourse course : studentDetail.getStudentsCourseList()) {
+    for (StudentsCourse course : studentDetail.getStudentCourseList()) {
       repository.updateStudentsCourses(course);
     }
   }
@@ -84,7 +95,7 @@ public class StudentService {
 
     StudentDetail studentDetail = new StudentDetail();
     studentDetail.setStudent(student);
-    studentDetail.setStudentsCourseList(courses);
+    studentDetail.setStudentCourseList(courses);
 
     return studentDetail;
   }
@@ -92,7 +103,14 @@ public class StudentService {
   @Transactional
   public void updateStudent(StudentDetail studentDetail) {
     repository.updateStudent(studentDetail.getStudent());
-    studentDetail.getStudentsCourseList()
+    studentDetail.getStudentCourseList()
         .forEach(studentsCourse -> repository.updateStudentsCourses(studentsCourse));
   }
+
+  @Transactional(readOnly = true)
+  public List<StudentData> searchStudents(String name, String courseName, String status) {
+    return repository.searchStudents(name, courseName, status);
+  }
+
+
 }

@@ -7,7 +7,7 @@
 <h1>受講生編集</h1>
 <form th:action="@{/updateStudent}" th:object="${studentDetail}" method="post">
 
- 
+
   <div>
     <label>名前</label>
     <input type="text" th:field="*{student.name}"/>
@@ -70,7 +70,18 @@
       <label>終了日</label>
       <input type="date" th:field="*{studentsCourses[__${stat.index}__].finishDate}"/>
     </div>
+    <div>
+      <label>申込状況</label>
+      <select th:field="*{studentsCourses[__${stat.index}__].status}">
+        <option value="仮申込" th:selected="${course.status == '仮申込'}">仮申込</option>
+        <option value="本申込" th:selected="${course.status == '本申込'}">本申込</option>
+        <option value="受講中" th:selected="${course.status == '受講中'}">受講中</option>
+        <option value="受講終了" th:selected="${course.status == '受講終了'}">受講終了</option>
+      </select>
+    </div>
   </div>
+
+
   <div>
     <button type="submit">更新</button>
   </div>

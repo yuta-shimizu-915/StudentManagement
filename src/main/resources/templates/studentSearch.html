@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>受講生検索</title>
+</head>
+<body>
+<h1>受講生検索</h1>
+
+<form action="/students/search" method="get">
+  名前: <input type="text" name="name">
+  コース: <input type="text" name="courseName">
+  ステータス:
+  <select name="status">
+    <option value="">全て</option>
+    <option value="仮申込">仮申込</option>
+    <option value="本申込">本申込</option>
+    <option value="受講中">受講中</option>
+    <option value="受講終了">受講終了</option>
+  </select>
+  <button type="submit">検索</button>
+</form>
+
+<table border="1">
+  <thead>
+  <tr>
+    <th>名前</th>
+    <th>ふりがな</th>
+    <th>ニックネーム</th>
+    <th>メール</th>
+    <th>地域</th>
+    <th>年齢</th>
+    <th>性別</th>
+    <th>備考</th>
+    <th>コース名</th>
+    <th>開始日</th>
+    <th>終了日</th>
+    <th>申込状況</th>
+    <th>操作</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="student : ${students}">
+    <td th:text="${student.name}"></td>
+    <td th:text="${student.furigana}"></td>
+    <td th:text="${student.nickName}"></td>
+    <td th:text="${student.email}"></td>
+    <td th:text="${student.region}"></td>
+    <td th:text="${student.age}"></td>
+    <td th:text="${student.gender}"></td>
+    <td th:text="${student.remark}"></td>
+    <td th:text="${student.courseName}"></td>
+    <td th:text="${student.startDate}"></td>
+    <td th:text="${student.finishDate}"></td>
+    <td th:text="${student.status}"></td>
+    <td>
+      <a th:href="@{/editStudent/{id}(id=${student.studentId})}">編集</a>
+    </td>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>

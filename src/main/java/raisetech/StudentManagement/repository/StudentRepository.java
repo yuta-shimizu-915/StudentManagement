@@ -1,32 +1,27 @@
 package raisetech.StudentManagement.repository;
 
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
 import java.util.List;
-import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import raisetech.StudentManagement.data.CourseStatus;
 import raisetech.StudentManagement.data.Student;
+import raisetech.StudentManagement.data.StudentData;
 import raisetech.StudentManagement.data.StudentsCourse;
 
 
 @Mapper
 public interface StudentRepository {
 
-  @Select("SELECT * FROM students")
   List<Student> searchStudent();
 
   List<Student> search();
-  @Select("SELECT * FROM student WHERE name = #{name}")
+
   Student searchByName(String name);
 
 
   Student searchStudent(String studentId);
-  @Insert("INSERT student values(#{name},#{age})")
-  void registerStudent(String name,int age);
+
+  void registerStudent(String name, int age);
 
 
   List<StudentsCourse> searchStudentCourseList();
@@ -55,5 +50,14 @@ public interface StudentRepository {
 
   void updateStudentsCourses(StudentsCourse studentsCourse);
 
+  void registerCourseStatus(CourseStatus courseStatus);
+
+  void updateCourseStatus(CourseStatus courseStatus);
+
+  List<StudentData> searchStudents(@Param("name") String name,
+      @Param("courseName") String courseName,
+      @Param("status") String status);
+
 
 }
+

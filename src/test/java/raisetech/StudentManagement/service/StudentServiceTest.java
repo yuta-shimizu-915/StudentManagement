@@ -5,7 +5,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -118,13 +117,13 @@ class StudentServiceTest {
 
     StudentsCourse studentCourse = new StudentsCourse();
 
-    LocalDate now = LocalDate.now();
+    LocalDate today = LocalDate.now();
 
     sut.initStudentsCourse(studentCourse, student);
 
     assertEquals(studentId, studentCourse.getStudentId());
-    assertEquals(LocalDateTime.now().getHour(), studentCourse.getStartDate());
-    assertEquals(LocalDateTime.now().plusYears(1).getYear(),
+    assertEquals(today, studentCourse.getStartDate());
+    assertEquals(today.plusYears(1),
         studentCourse.getFinishDate());
 
 

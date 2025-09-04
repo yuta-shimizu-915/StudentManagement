@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>生徒一覧</title>
+</head>
+<body>
+<h1>生徒一覧</h1>
+
+<!-- 検索フォーム -->
+<form th:action="@{/studentListPage}" method="get">
+  <input type="text" name="name" placeholder="名前" th:value="${param.name}"/>
+  <input type="text" name="courseName" placeholder="コース名" th:value="${param.courseName}"/>
+  <input type="text" name="status" placeholder="ステータス" th:value="${param.status}"/>
+  <button type="submit">検索</button>
+</form>
+
+<!-- 生徒一覧テーブル -->
+<table border="1">
+  <thead>
+  <tr>
+    <th>名前</th>
+    <th>コース名</th>
+    <th>開始日</th>
+    <th>終了日</th>
+    <th>ステータス</th>
+    <th>操作</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="student : ${studentList}">
+    <form th:action="@{/updateCourseStatus}" method="post">
+      <!-- 生徒ID・コースID を hidden で送信 -->
+      <input type="hidden" name="studentId" th:value="${student.studentId}"/>
+      <input type="hidden" name="studentCourseId" th:value="${student.studentCourseId}"/>
+
+      <td th:text="${student.name}"></td>
+      <td th:text="${student.courseName}"></td>
+      <td th:text="${student.startDate}"></td>
+      <td th:text="${student.finishDate}"></td>
+      <td>
+        <select name="status">
+          <option value="仮申込" th:selected="${student.status == '仮申込'}">仮申込</option>
+          <option value="本申込" th:selected="${student.status == '本申込'}">本申込</option>
+          <option value="受講中" th:selected="${student.status == '受講中'}">受講中</option>
+          <option value="受講終了" th:selected="${student.status == '受講終了'}">受講終了</option>
+        </select>
+      </td>
+      <td>
+        <button type="submit">更新</button>
+      </td>
+    </form>
+  </tr>
+  </tbody>
+</table>
+
+<p><a th:href="@{/registerStudentPage}">新規登録</a></p>
+</body>
+</html>

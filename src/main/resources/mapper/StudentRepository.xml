@@ -56,7 +56,7 @@
 
   <select id="findStudentCoursesById" parameterType="string"
     resultType="raisetech.StudentManagement.data.StudentsCourse">
-    SELECT student_id, course_name, start_date, finish_date
+    SELECT id, student_id, course_name, start_date, finish_date
     FROM students_courses WHERE student_id = #{studentId}
   </select>
 
@@ -64,5 +64,52 @@
     parameterType="raisetech.StudentManagement.data.StudentsCourse">
     UPDATE students_courses SET course_name = #{courseName} WHERE id = #{id}
   </update>
+
+  <select id="searchStudents" resultType="raisetech.StudentManagement.data.StudentData">
+    SELECT
+    s.student_id,
+    s.name,
+    s.furigana,
+    s.nickname AS nickName,
+    s.e_mail AS email,
+    s.region,
+    s.age,
+    s.gender,
+    s.remark,
+    c.id AS studentCourseId,
+    c.course_name AS courseName,
+    c.start_date AS startDate,
+    c.finish_date AS finishDate,
+    st.id AS courseStatusId,
+    st.status
+    FROM students s
+    LEFT JOIN students_courses c ON s.student_id = c.student_id
+    LEFT JOIN course_status st ON c.id = st.student_course_id
+    <where>
+      <if test="name != null and name != ''">
+        s.name LIKE CONCAT('%', #{name}, '%')
+      </if>
+      <if test="courseName != null and courseName != ''">
+        AND c.course_name LIKE CONCAT('%', #{courseName}, '%')
+      </if>
+      <if test="status != null and status != ''">
+        AND st.status = #{status}
+      </if>
+    </where>
+  </select>
+
+  <insert id="registerCourseStatus" parameterType="raisetech.StudentManagement.data.CourseStatus"
+    useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO course_status (student_course_id, status)
+    VALUES (#{studentCourseId}, #{status})
+  </insert>
+
+  <update id="updateCourseStatus"
+    parameterType="raisetech.StudentManagement.data.CourseStatus">
+    UPDATE course_status
+    SET status = #{status}
+    WHERE student_course_id = #{studentCourseId}
+  </update>
+
 
 </mapper>

@@ -12,7 +12,7 @@ public class StudentConverterTest {
 
   @Test
   void studentcourse_mapping() {
-    //複数の学生と、それぞれに対応した受講コース情報が正しく紐づいているかを確認するテスト。
+
     Student student1 = new Student();
     student1.setStudentId("1");
     student1.setName("YamadaTaro");
